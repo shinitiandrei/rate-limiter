@@ -24,14 +24,43 @@ Thank you for the opportunity and would love to hear some feedback.
 
 ## Running this project
 
+Set this environment variables to customise the limits of the rate limiter if you want to
+```bash
+# examples
+export MAX_REQUESTS=10
+export WINDOW_DURATION=10m
+```
+
 There's a `Makefile` in this project, so you can basically run the following:
 
 ```bash
-## running the default tests
-## 
+## Install all the dependencies
+make install
+
+## running all tests
+make test 
+
+## building the binary for MACOS
+make build
+
+## running the binary above
+make run
+
+## clean up
+make clean
 
 ```
 
-go get github.com/patrickmn/go-cache
-go get github.com/gorilla/mux
-go mod tidy
+### Testing
+When you run `make build` and `make run` you are going to have an HTTP server listening on 8080.
+Then, just run a simple call to get a response: 
+```bash
+curl -v -X GET http://localhost:8080/svc
+```
+You can reduce the amount of request(`MAX_REQUESTS`) to very low to start getting `429: Too many requests`
+
+Or you can simply run the tests:
+```bash
+go test .
+```
+The function responsible for testing the 100 request / hour is: `TestRefusedIsRequestAllowed()`
