@@ -2,19 +2,19 @@ BINARY_NAME=ratelimiter
 
 .PHONY: build
 build:
- GOARCH=amd64 GOOS=darwin go build -o ${BINARY_NAME}-darwin main.go
+	GOARCH=amd64 GOOS=darwin go build -o ${BINARY_NAME}-darwin .
 
 .PHONY: run
 run:
- ./${BINARY_NAME}-darwin
+	./${BINARY_NAME}-darwin
 
 .PHONY: build_and_run
 build_and_run: build run
 
 .PHONY: clean
 clean:
- go clean
- rm ${BINARY_NAME}-darwin
+	go clean
+	rm ${BINARY_NAME}-darwin
 
 .PHONY: test
 test:
@@ -22,12 +22,13 @@ test:
 
 .PHONY: test_coverage
 test_coverage:
- go test . -coverprofile=coverage.out
+	go test . -coverprofile=coverage.out
 
 .PHONY: install
 install:
- go mod download
+	go mod download
+	go mod tidy
 
 .PHONY: vet
 vet:
- go vet
+	go vet
