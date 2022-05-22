@@ -13,7 +13,9 @@ Variables:
 func TestValidIsRequestAllowed(t *testing.T) {
 	var duration, _ = time.ParseDuration("1m")
 
-	var sw = new(SlidingWindow).NewRateLimiter(100, duration)
+	var sw = GetSWInstance()
+	sw.MaxRequests = 10
+	sw.WindowDuration = duration
 
 	var limiterInterface RateLimiterInterface = sw
 
@@ -43,7 +45,9 @@ func TestRefusedIsRequestAllowed(t *testing.T) {
 
 	var duration, _ = time.ParseDuration("1m")
 
-	var sw = new(SlidingWindow).NewRateLimiter(maxReq, duration)
+	var sw = GetSWInstance()
+	sw.MaxRequests = maxReq
+	sw.WindowDuration = duration
 
 	var limiterInterface RateLimiterInterface = sw
 
@@ -94,7 +98,9 @@ func TestPerformanceIsRequestAllowed(t *testing.T) {
 
 	var started = time.Now()
 
-	var sw = new(SlidingWindow).NewRateLimiter(maxReq, duration)
+	var sw = GetSWInstance()
+	sw.MaxRequests = maxReq
+	sw.WindowDuration = duration
 
 	var limiterInterface RateLimiterInterface = sw
 

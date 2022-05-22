@@ -7,6 +7,10 @@ import (
 	"time"
 )
 
+// Applying singleton to this variable as it creates the in-memory storage
+var initiated *SlidingWindow
+var once sync.Once
+
 // A SlidingWindow represents the Sliding window strategy settings to configure the
 // rate limiter function
 type SlidingWindow struct {
@@ -134,10 +138,21 @@ func (sw *SlidingWindow) ResetRequestCount(cache *CacheBody) error {
 	Returns *SlidingWindow
 	  *SlidingWindow: object is returned
 */
-func (sw *SlidingWindow) NewRateLimiter(maxReq uint64, duration time.Duration) *SlidingWindow {
-	return &SlidingWindow{
-		MaxRequests:    maxReq,
-		WindowDuration: duration,
-		CacheInterface: InitMemCache(),
-	}
+func NewRateLimiter(sw *SlidingWindow, maxReq uint64, duration time.Duration) *SlidingWindow {
+	sw.MaxRequests = maxReq
+	sw.WindowDuration = duration
+	return sw
+}
+
+/*
+	Singleton function
+	Parameters:
+	Returns *SlidingWindow
+	  *SlidingWindow: object is returned
+*/
+func GetSWInstance() *SlidingWindow {
+	once.Do(func() {
+		initiated = &SlidingWindow{CacheInterface: InitMemCache()}
+	})
+	return initiated
 }
