@@ -53,7 +53,7 @@ func isAllowed() bool {
 
 	// Using Environment variables to allow customisation of MAX_REQUESTS
 	if req, exist := os.LookupEnv("MAX_REQUESTS"); exist != true {
-		MaxRequests = 3
+		MaxRequests = 100
 	} else {
 		n, err := strconv.ParseInt(req, 10, 64)
 		if err != nil {
@@ -64,7 +64,7 @@ func isAllowed() bool {
 
 	// Using Environment variables to allow customisation of WINDOW_DURATION
 	if winDuration, exist := os.LookupEnv("WINDOW_DURATION"); exist != true {
-		WindowDuration = "1m"
+		WindowDuration = "60m"
 	} else {
 		WindowDuration = winDuration
 	}
