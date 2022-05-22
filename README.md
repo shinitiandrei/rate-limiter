@@ -13,13 +13,14 @@ offer precise rate limiting per requester.
 To facilitate this implementation, I'm using a library that can manage
 the cache storage: github.com/patrickmn/go-cache
 
-The tests should cover your requirements, whereas is required to allow a requester
+The tests should cover the requirements, which is to allow a requester
 to send 100 requests per hour, but to get the "429" http you should start a server to handle
-the http responses properly. Everything is documented below.
+the http responses properly. You can also customise the amount of request and window times.
+Everything is documented below.
 
-There are many scenarios I couldn't cover given the time but I would've liked to
+There are many scenarios I couldn't cover given the time, but I would've liked to
 have improved test coverage, performance and more time in structuring logs and responses better.
-Also adding a Dockerfile with Redis + this task talking to each other.
+Also adding a Dockerfile with Redis + the Rate Limiter talking to each other.
 Thank you for the opportunity and would love to hear some feedback.
 
 ## Running this project
@@ -40,11 +41,8 @@ make install
 ## running all tests
 make test 
 
-## building the binary for MACOS
-make build
-
-## running the binary above
-make run
+## building and running the binary for MACOS
+make build_and_run
 
 ## clean up
 make clean
