@@ -1,4 +1,4 @@
-# Rate limiter for Airtasker
+# Rate limiter
 
 
 ## Technical choices
